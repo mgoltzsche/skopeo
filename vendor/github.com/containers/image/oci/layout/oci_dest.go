@@ -9,12 +9,13 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/pkg/errors"
+
 	"github.com/containers/image/manifest"
 	"github.com/containers/image/types"
-	digest "github.com/opencontainers/go-digest"
+	"github.com/opencontainers/go-digest"
 	imgspec "github.com/opencontainers/image-spec/specs-go"
 	imgspecv1 "github.com/opencontainers/image-spec/specs-go/v1"
-	"github.com/pkg/errors"
 )
 
 type ociImageDestination struct {
@@ -26,7 +27,7 @@ type ociImageDestination struct {
 // newImageDestination returns an ImageDestination for writing to an existing directory.
 func newImageDestination(sys *types.SystemContext, ref ociReference) (types.ImageDestination, error) {
 	if ref.image == "" {
-		return nil, errors.Errorf("cannot save image with empty reference name (syntax must be of form <transport>:<path>:<reference>)")
+		return nil, errors.Errorf("cannot save image with empty image.ref.name")
 	}
 
 	var index *imgspecv1.Index
